@@ -1,0 +1,24 @@
+{
+  "name": "type-challenges",
+  "version": "1.0.0",
+  "description": "My type challenges submissions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trongtai37/type-challenges.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trongtai37/type-challenges/issues"
+  },
+  "homepage": "https://github.com/trongtai37/type-challenges#readme",
+  "devDependencies": {
+    "@type-challenges/utils": "^0.1.1",
+    "typescript": "^4.8.4"
+  }
+}
