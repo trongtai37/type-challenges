@@ -1,52 +1,60 @@
 /*
-  14 - First of Array
+  11 - Tuple to Object
   -------
-  by Anthony Fu (@antfu) #easy #array
+  by sinoon (@sinoon) #easy 
   
   ### Question
   
-  Implement a generic `First<T>` that takes an Array `T` and returns its first element's type.
+  Give an array, transform into an object type and the key/value must in the given array.
   
   For example:
   
   ```ts
-  type arr1 = ['a', 'b', 'c']
-  type arr2 = [3, 2, 1]
+  const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
   
-  type head1 = First<arr1> // expected to be 'a'
-  type head2 = First<arr2> // expected to be 3
+  type result = TupleToObject<typeof tuple> // expected { tesla: 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
   ```
   
-  > View on GitHub: https://tsch.js.org/14
+  > View on GitHub: https://tsch.js.org/11
 */
 
 /* _____________ Your Code Here _____________ */
 
-type First<T extends any[]> = T['length'] extends 0 ? never : T[0];
-// type First<T extends any[]> = T extends [first: infer F, ...rest: any[]]
-//   ? F
-//   : never;
+type TupleToObject<T extends readonly PropertyKey[]> = {
+  [key in T[number]]: key;
+};
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
 
+const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const;
+const tupleNumber = [1, 2, 3, 4] as const;
+const tupleMix = [1, '2', 3, '4'] as const;
+
 type cases = [
-  Expect<Equal<First<[3, 2, 1]>, 3>>,
-  Expect<Equal<First<[() => 123, { a: string }]>, () => 123>>,
-  Expect<Equal<First<[]>, never>>,
-  Expect<Equal<First<[undefined]>, undefined>>
+  Expect<
+    Equal<
+      TupleToObject<typeof tuple>,
+      {
+        tesla: 'tesla';
+        'model 3': 'model 3';
+        'model X': 'model X';
+        'model Y': 'model Y';
+      }
+    >
+  >,
+  Expect<Equal<TupleToObject<typeof tupleNumber>, { 1: 1; 2: 2; 3: 3; 4: 4 }>>,
+  Expect<
+    Equal<TupleToObject<typeof tupleMix>, { 1: 1; '2': '2'; 3: 3; '4': '4' }>
+  >
 ];
 
-type errors = [
-  // @ts-expect-error
-  First<'notArray'>,
-  // @ts-expect-error
-  First<{ 0: 'arrayLike' }>
-];
+// @ts-expect-error
+type error = TupleToObject<[[1, 2], {}]>;
 
 /* _____________ Further Steps _____________ */
 /*
-  > Share your solutions: https://tsch.js.org/14/answer
-  > View solutions: https://tsch.js.org/14/solutions
+  > Share your solutions: https://tsch.js.org/11/answer
+  > View solutions: https://tsch.js.org/11/solutions
   > More Challenges: https://tsch.js.org
 */
